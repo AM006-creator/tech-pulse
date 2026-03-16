@@ -1055,7 +1055,7 @@
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 minute timeout
 
-            fetch('/create-skill', {
+            fetch('https://tech-pulse-builder.onrender.com/create-skill', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
