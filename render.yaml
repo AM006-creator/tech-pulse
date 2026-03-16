@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: tech-pulse-builder
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python tech-pulse-builder.py
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        scope: build,runtime
+        sync: false
+      - key: PORT
+        value: 10000
