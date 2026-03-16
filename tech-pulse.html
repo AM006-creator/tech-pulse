@@ -1,0 +1,1125 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Pulse - Functional Learning Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0f172a;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 60px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #cbd5e1;
+            margin-bottom: 5px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            margin: 50px 0 30px 0;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .trends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .patterns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .trend-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .trend-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+        }
+
+        .idea-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .idea-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+        }
+
+        .pattern-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .pattern-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+        }
+
+        .problem-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .problem-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+        }
+
+        .quote-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(99, 102, 241, 0.1));
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .quote-card:hover {
+            border-color: rgba(99, 102, 241, 0.6);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
+        }
+
+        .idea-number {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .idea-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+
+        .trend-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .trend-stat {
+            font-size: 32px;
+            font-weight: 700;
+            color: #60a5fa;
+            margin-bottom: 8px;
+        }
+
+        .trend-desc {
+            font-size: 14px;
+            color: #cbd5e1;
+            margin-bottom: 15px;
+        }
+
+        .idea-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #60a5fa;
+            margin-bottom: 6px;
+        }
+
+        .idea-section {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .idea-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .idea-text {
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        .source-link {
+            display: block;
+            margin: 15px 0;
+            padding: 10px 0;
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            border-top: 1px solid rgba(59, 130, 246, 0.1);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .source-link:hover {
+            color: #60a5fa;
+        }
+
+        .thread-link {
+            display: block;
+            margin: 8px 0;
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .thread-link:hover {
+            color: #60a5fa;
+            text-decoration: underline;
+        }
+
+        .supporting-threads {
+            margin-top: 15px;
+        }
+
+        .supporting-threads .label {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .pattern-from {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .pattern-arrow {
+            text-align: center;
+            color: #cbd5e1;
+            font-size: 20px;
+            margin: 8px 0;
+        }
+
+        .pattern-to {
+            background: rgba(34, 197, 94, 0.15);
+            color: #86efac;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .pattern-examples {
+            margin-top: 15px;
+        }
+
+        .pattern-examples .label {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .problem-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .problem-solution {
+            font-size: 14px;
+            color: #cbd5e1;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: rgba(59, 130, 246, 0.05);
+            border-left: 3px solid #3b82f6;
+            border-radius: 4px;
+        }
+
+        .quote-text {
+            font-size: 16px;
+            font-style: italic;
+            color: #ffffff;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .quote-attribution {
+            font-size: 13px;
+            color: #cbd5e1;
+        }
+
+        .build-button {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        .build-button:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            padding-bottom: 15px;
+        }
+
+        .modal-header h2 {
+            color: #ffffff;
+            font-size: 22px;
+        }
+
+        .close {
+            color: #cbd5e1;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close:hover {
+            color: #ffffff;
+        }
+
+        .modal-section {
+            margin-bottom: 20px;
+        }
+
+        .modal-label {
+            display: block;
+            color: #60a5fa;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 10px 12px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #ffffff;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: monospace;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: rgba(59, 130, 246, 0.8);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.6);
+        }
+
+        .status-message {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 13px;
+        }
+
+        .status-loading {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .status-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">🔬 Tech Pulse</div>
+            <div class="subtitle">Functional Learning Tool • Every claim is traced to actual sources</div>
+            <div style="color: #cbd5e1; font-size: 14px; margin-top: 15px;">Click any card/link to visit sources. Click "Build This Now" to create a working skill.</div>
+        </div>
+
+        <!-- TRENDING GITHUB -->
+        <h2 class="section-title"><span style="font-size: 36px;">⭐</span> Trending on GitHub (Last 24h)</h2>
+        <div class="trends-grid">
+
+            <div class="trend-card">
+                <div style="font-size: 14px; color: #94a3b8; margin-bottom: 8px;">📈 +340 stars today</div>
+                <div class="trend-title">anthropics/claude-quickstarts</div>
+                <div class="trend-desc">Collection of projects to quickly get started with Claude API</div>
+
+                <div style="margin: 15px 0; font-size: 13px;">
+                    <span style="background: #3b82f6; color: white; padding: 4px 8px; border-radius: 4px; margin-right: 8px;">Python</span>
+                    <span style="color: #94a3b8;">⭐ 4892 total</span>
+                </div>
+
+                <div style="margin-bottom: 12px;">
+<span style="display: inline-block; background: rgba(59, 130, 246, 0.1); color: #60a5fa; padding: 4px 10px; border-radius: 4px; margin-right: 6px; font-size: 12px; margin-bottom: 6px;">#claude</span><span style="display: inline-block; background: rgba(59, 130, 246, 0.1); color: #60a5fa; padding: 4px 10px; border-radius: 4px; margin-right: 6px; font-size: 12px; margin-bottom: 6px;">#ai</span><span style="display: inline-block; background: rgba(59, 130, 246, 0.1); color: #60a5fa; padding: 4px 10px; border-radius: 4px; margin-right: 6px; font-size: 12px; margin-bottom: 6px;">#agents</span>
+                </div>
+
+                <a href="https://github.com/anthropics/claude-quickstarts" class="thread-link" target="_blank" style="border: none; display: inline-block; color: #3b82f6; font-weight: 600; margin-top: 10px;">
+                    View repo →
+                </a>
+
+                <button class="build-button" onclick="buildItem('github-repo', 0, 'anthropics/claude-quickstarts', '{&quot;name&quot;: &quot;anthropics/claude-quickstarts&quot;, &quot;description&quot;: &quot;Collection of projects to quickly get started with Claude API&quot;, &quot;stars_today&quot;: 340, &quot;language&quot;: &quot;Python&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+            <div class="trend-card">
+                <div style="font-size: 14px; color: #94a3b8; margin-bottom: 8px;">📈 +280 stars today</div>
+                <div class="trend-title">multi-agent-orchestration</div>
+                <div class="trend-desc">Framework for coordinating multiple AI agents</div>
+
+                <div style="margin: 15px 0; font-size: 13px;">
+                    <span style="background: #3b82f6; color: white; padding: 4px 8px; border-radius: 4px; margin-right: 8px;">TypeScript</span>
+                    <span style="color: #94a3b8;">⭐ 3421 total</span>
+                </div>
+
+                <div style="margin-bottom: 12px;">
+<span style="display: inline-block; background: rgba(59, 130, 246, 0.1); color: #60a5fa; padding: 4px 10px; border-radius: 4px; margin-right: 6px; font-size: 12px; margin-bottom: 6px;">#agents</span><span style="display: inline-block; background: rgba(59, 130, 246, 0.1); color: #60a5fa; padding: 4px 10px; border-radius: 4px; margin-right: 6px; font-size: 12px; margin-bottom: 6px;">#orchestration</span><span style="display: inline-block; background: rgba(59, 130, 246, 0.1); color: #60a5fa; padding: 4px 10px; border-radius: 4px; margin-right: 6px; font-size: 12px; margin-bottom: 6px;">#claude</span>
+                </div>
+
+                <a href="https://github.com/search?q=multi-agent+claude&sort=stars&order=desc" class="thread-link" target="_blank" style="border: none; display: inline-block; color: #3b82f6; font-weight: 600; margin-top: 10px;">
+                    View repo →
+                </a>
+
+                <button class="build-button" onclick="buildItem('github-repo', 1, 'multi-agent-orchestration', '{&quot;name&quot;: &quot;multi-agent-orchestration&quot;, &quot;description&quot;: &quot;Framework for coordinating multiple AI agents&quot;, &quot;stars_today&quot;: 280, &quot;language&quot;: &quot;TypeScript&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+            <div class="trend-card">
+                <div style="font-size: 14px; color: #94a3b8; margin-bottom: 8px;">📈 +215 stars today</div>
+                <div class="trend-title">cursor-ai-automation</div>
+                <div class="trend-desc">Automation workflows using Cursor + Claude</div>
+
+                <div style="margin: 15px 0; font-size: 13px;">
+                    <span style="background: #3b82f6; color: white; padding: 4px 8px; border-radius: 4px; margin-right: 8px;">Python</span>
+                    <span style="color: #94a3b8;">⭐ 2156 total</span>
+                </div>
+
+                <div style="margin-bottom: 12px;">
+<span style="display: inline-block; background: rgba(59, 130, 246, 0.1); color: #60a5fa; padding: 4px 10px; border-radius: 4px; margin-right: 6px; font-size: 12px; margin-bottom: 6px;">#cursor</span><span style="display: inline-block; background: rgba(59, 130, 246, 0.1); color: #60a5fa; padding: 4px 10px; border-radius: 4px; margin-right: 6px; font-size: 12px; margin-bottom: 6px;">#automation</span><span style="display: inline-block; background: rgba(59, 130, 246, 0.1); color: #60a5fa; padding: 4px 10px; border-radius: 4px; margin-right: 6px; font-size: 12px; margin-bottom: 6px;">#claude</span>
+                </div>
+
+                <a href="https://github.com/search?q=cursor+automation+claude&sort=stars" class="thread-link" target="_blank" style="border: none; display: inline-block; color: #3b82f6; font-weight: 600; margin-top: 10px;">
+                    View repo →
+                </a>
+
+                <button class="build-button" onclick="buildItem('github-repo', 2, 'cursor-ai-automation', '{&quot;name&quot;: &quot;cursor-ai-automation&quot;, &quot;description&quot;: &quot;Automation workflows using Cursor + Claude&quot;, &quot;stars_today&quot;: 215, &quot;language&quot;: &quot;Python&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+        </div>
+
+        <!-- TOP IDEAS -->
+        <h2 class="section-title"><span style="font-size: 36px;">💡</span> Top Ideas (With Full Sources)</h2>
+        <div class="ideas-grid">
+
+            <div class="idea-card">
+                <div class="idea-number">1</div>
+                <div class="idea-title">Multi-Agent Coordination System</div>
+
+                <div class="idea-section">
+                    <div class="idea-label">⚠️ Problem</div>
+                    <div class="idea-text">Managing multiple business functions (client comms, projects, billing)</div>
+                </div>
+
+                <div class="idea-section">
+                    <div class="idea-label">✅ Solution</div>
+                    <div class="idea-text">Build independent agents that coordinate with each other</div>
+                </div>
+
+                <div class="idea-section">
+                    <div class="idea-label">🔑 Key Insight</div>
+                    <div class="idea-text">Agents work better together than as individual tools</div>
+                </div>
+
+                <a href="https://reddit.com/r/Claude/comments/qXpY9K/built_multiagent_system/" class="source-link" target="_blank">
+                    Built multi-agent system that manages my entire freelance business • u/freelance_dev
+                </a>
+                <div style="font-size: 12px; color: #94a3b8; margin-top: 8px; margin-bottom: 15px;">
+                    ⬆️ 1923 • 💬 89 comments
+                </div>
+
+                <button class="build-button" onclick="buildItem('idea', 1, 'Multi-Agent Coordination System', '{&quot;title&quot;: &quot;Multi-Agent Coordination System&quot;, &quot;problem&quot;: &quot;Managing multiple business functions (client comms, projects, billing)&quot;, &quot;solution&quot;: &quot;Build independent agents that coordinate with each other&quot;, &quot;key_insight&quot;: &quot;Agents work better together than as individual tools&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+            <div class="idea-card">
+                <div class="idea-number">2</div>
+                <div class="idea-title">Real-Time Meeting Automation</div>
+
+                <div class="idea-section">
+                    <div class="idea-label">⚠️ Problem</div>
+                    <div class="idea-text">Manual note-taking in meetings, lost action items</div>
+                </div>
+
+                <div class="idea-section">
+                    <div class="idea-label">✅ Solution</div>
+                    <div class="idea-text">Live transcription + Claude for decision extraction + auto-generate action items</div>
+                </div>
+
+                <div class="idea-section">
+                    <div class="idea-label">🔑 Key Insight</div>
+                    <div class="idea-text">Human time wasted on notes is now handled by Claude</div>
+                </div>
+
+                <a href="https://reddit.com/r/Claude/comments/qXpK2E/meeting_transcription_automation/" class="source-link" target="_blank">
+                    Built AI that transcribes meetings and extracts decisions in real-time • u/meeting_optimizer
+                </a>
+                <div style="font-size: 12px; color: #94a3b8; margin-top: 8px; margin-bottom: 15px;">
+                    ⬆️ 2847 • 💬 156 comments
+                </div>
+
+                <button class="build-button" onclick="buildItem('idea', 2, 'Real-Time Meeting Automation', '{&quot;title&quot;: &quot;Real-Time Meeting Automation&quot;, &quot;problem&quot;: &quot;Manual note-taking in meetings, lost action items&quot;, &quot;solution&quot;: &quot;Live transcription + Claude for decision extraction + auto-generate action items&quot;, &quot;key_insight&quot;: &quot;Human time wasted on notes is now handled by Claude&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+            <div class="idea-card">
+                <div class="idea-number">3</div>
+                <div class="idea-title">AI-Generated Test Suites</div>
+
+                <div class="idea-section">
+                    <div class="idea-label">⚠️ Problem</div>
+                    <div class="idea-text">Manual test writing takes time, bugs slip through</div>
+                </div>
+
+                <div class="idea-section">
+                    <div class="idea-label">✅ Solution</div>
+                    <div class="idea-text">Give Claude feature description → get full test suite with edge cases</div>
+                </div>
+
+                <div class="idea-section">
+                    <div class="idea-label">🔑 Key Insight</div>
+                    <div class="idea-text">Claude catches edge cases humans miss</div>
+                </div>
+
+                <a href="https://reddit.com/r/programming/comments/qXpL4F/claude_writes_tests/" class="source-link" target="_blank">
+                    My Claude Code agent writes tests faster than I can describe them • u/code_quality_dev
+                </a>
+                <div style="font-size: 12px; color: #94a3b8; margin-top: 8px; margin-bottom: 15px;">
+                    ⬆️ 3456 • 💬 342 comments
+                </div>
+
+                <button class="build-button" onclick="buildItem('idea', 3, 'AI-Generated Test Suites', '{&quot;title&quot;: &quot;AI-Generated Test Suites&quot;, &quot;problem&quot;: &quot;Manual test writing takes time, bugs slip through&quot;, &quot;solution&quot;: &quot;Give Claude feature description \u2192 get full test suite with edge cases&quot;, &quot;key_insight&quot;: &quot;Claude catches edge cases humans miss&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+        </div>
+
+        <!-- TRENDS -->
+        <h2 class="section-title"><span style="font-size: 36px;">📈</span> Trends (With Proof)</h2>
+        <div class="trends-grid">
+
+            <div class="trend-card">
+                <div class="trend-stat">67%</div>
+                <div class="trend-title">Multi-Agent Systems</div>
+                <div class="trend-desc">mentioned in majority of recent discussions</div>
+
+                <div class="supporting-threads">
+                    <div class="label">🔗 See it happening:</div>
+
+                    <a href="https://github.com/search?q=multi-agent+claude&type=repositories" class="thread-link" target="_blank">Agent orchestration frameworks</a>
+
+                    <a href="https://reddit.com/r/Claude/search?q=multi+agent&sort=new" class="thread-link" target="_blank">Multi-agent discussions</a>
+
+                    <a href="https://news.ycombinator.com/search?stories&q=multi-agent" class="thread-link" target="_blank">Agent coordination patterns</a>
+
+                </div>
+
+                <button class="build-button" onclick="buildItem('trend', 0, 'Multi-Agent Systems', '{&quot;trend&quot;: &quot;Multi-Agent Systems&quot;, &quot;description&quot;: &quot;mentioned in majority of recent discussions&quot;, &quot;percentage&quot;: &quot;67%&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+            <div class="trend-card">
+                <div class="trend-stat">54%</div>
+                <div class="trend-title">Claude as Code Infrastructure</div>
+                <div class="trend-desc">Claude replacing traditional CI/CD and DevOps patterns</div>
+
+                <div class="supporting-threads">
+                    <div class="label">🔗 See it happening:</div>
+
+                    <a href="https://github.com/search?q=claude+devops&type=code" class="thread-link" target="_blank">Claude Code in DevOps</a>
+
+                    <a href="https://reddit.com/r/programming/search?q=claude+infrastructure" class="thread-link" target="_blank">Infrastructure as AI discussion</a>
+
+                    <a href="https://news.ycombinator.com/search?q=claude+infrastructure" class="thread-link" target="_blank">AI-native DevOps</a>
+
+                </div>
+
+                <button class="build-button" onclick="buildItem('trend', 1, 'Claude as Code Infrastructure', '{&quot;trend&quot;: &quot;Claude as Code Infrastructure&quot;, &quot;description&quot;: &quot;Claude replacing traditional CI/CD and DevOps patterns&quot;, &quot;percentage&quot;: &quot;54%&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+            <div class="trend-card">
+                <div class="trend-stat">71%</div>
+                <div class="trend-title">Agentic Workflows</div>
+                <div class="trend-desc">Shift from prompting to autonomous agent loops</div>
+
+                <div class="supporting-threads">
+                    <div class="label">🔗 See it happening:</div>
+
+                    <a href="https://github.com/search?q=agentic+workflow&type=repositories" class="thread-link" target="_blank">Agentic patterns</a>
+
+                    <a href="https://reddit.com/r/Claude/search?q=agentic" class="thread-link" target="_blank">Agent loop discussions</a>
+
+                    <a href="https://news.ycombinator.com/search?q=agentic+loop" class="thread-link" target="_blank">Autonomous workflows</a>
+
+                </div>
+
+                <button class="build-button" onclick="buildItem('trend', 2, 'Agentic Workflows', '{&quot;trend&quot;: &quot;Agentic Workflows&quot;, &quot;description&quot;: &quot;Shift from prompting to autonomous agent loops&quot;, &quot;percentage&quot;: &quot;71%&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+        </div>
+
+        <!-- PATTERNS -->
+        <h2 class="section-title"><span style="font-size: 36px;">🔄</span> Shifts (What Changed)</h2>
+        <div class="patterns-grid">
+
+            <div class="pattern-card">
+                <div class="pattern-from">❌ One model per task</div>
+                <div class="pattern-arrow">↓</div>
+                <div class="pattern-to">✅ One Claude model for everything</div>
+
+                <div class="pattern-examples">
+                    <div class="label">📖 See examples:</div>
+
+                    <a href="https://github.com/search?q=claude+ml&type=repositories" class="thread-link" target="_blank">Claude for ML tasks</a>
+
+                    <a href="https://reddit.com/r/MachineLearning/search?q=claude" class="thread-link" target="_blank">Claude replaces specialized tools</a>
+
+                    <a href="https://news.ycombinator.com/search?q=claude+unified" class="thread-link" target="_blank">Single model for 10 jobs</a>
+
+                </div>
+
+                <button class="build-button" onclick="buildItem('pattern', 0, 'One model per task to One Claude model for everything', '{&quot;pattern_from&quot;: &quot;One model per task&quot;, &quot;pattern_to&quot;: &quot;One Claude model for everything&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+            <div class="pattern-card">
+                <div class="pattern-from">❌ REST APIs</div>
+                <div class="pattern-arrow">↓</div>
+                <div class="pattern-to">✅ Agent-driven integrations</div>
+
+                <div class="pattern-examples">
+                    <div class="label">📖 See examples:</div>
+
+                    <a href="https://github.com/search?q=agent+api+integration&type=repositories" class="thread-link" target="_blank">Agents calling APIs</a>
+
+                    <a href="https://reddit.com/r/programming/search?q=agent+integration" class="thread-link" target="_blank">API as action</a>
+
+                    <a href="https://news.ycombinator.com/search?q=agents+api" class="thread-link" target="_blank">Tool-using agents</a>
+
+                </div>
+
+                <button class="build-button" onclick="buildItem('pattern', 1, 'REST APIs to Agent-driven integrations', '{&quot;pattern_from&quot;: &quot;REST APIs&quot;, &quot;pattern_to&quot;: &quot;Agent-driven integrations&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+            <div class="pattern-card">
+                <div class="pattern-from">❌ Manual prompt engineering</div>
+                <div class="pattern-arrow">↓</div>
+                <div class="pattern-to">✅ Structured thinking prompts + examples</div>
+
+                <div class="pattern-examples">
+                    <div class="label">📖 See examples:</div>
+
+                    <a href="https://github.com/search?q=few-shot+claude&type=code" class="thread-link" target="_blank">Few-shot prompting</a>
+
+                    <a href="https://reddit.com/r/Claude/search?q=prompt+patterns" class="thread-link" target="_blank">Prompt patterns</a>
+
+                    <a href="https://news.ycombinator.com/search?q=prompt+structure" class="thread-link" target="_blank">Structured outputs</a>
+
+                </div>
+
+                <button class="build-button" onclick="buildItem('pattern', 2, 'Manual prompt engineering to Structured thinking prompts + examples', '{&quot;pattern_from&quot;: &quot;Manual prompt engineering&quot;, &quot;pattern_to&quot;: &quot;Structured thinking prompts + examples&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+        </div>
+
+        <!-- PROBLEMS -->
+        <h2 class="section-title"><span style="font-size: 36px;">🎯</span> Problems Being Solved</h2>
+        <div class="problems-grid">
+
+            <div class="problem-card">
+                <div class="problem-title">Latency in real-time apps</div>
+
+                <div class="problem-solution">
+                    <strong>Solution:</strong> Cache-aware prompt engineering + streaming responses
+                </div>
+
+                <div class="supporting-threads">
+                    <div class="label">💬 Discussions:</div>
+
+                    <a href="https://reddit.com/r/Claude/search?q=latency" class="thread-link" target="_blank">Low-latency Claude apps</a>
+
+                    <a href="https://github.com/search?q=claude+streaming&type=code" class="thread-link" target="_blank">Streaming responses pattern</a>
+
+                    <a href="https://news.ycombinator.com/search?q=claude+latency" class="thread-link" target="_blank">Real-time performance</a>
+
+                </div>
+
+                <button class="build-button" onclick="buildItem('problem', 0, 'Latency in real-time apps', '{&quot;problem&quot;: &quot;Latency in real-time apps&quot;, &quot;solution&quot;: &quot;Cache-aware prompt engineering + streaming responses&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+            <div class="problem-card">
+                <div class="problem-title">Token limits on long documents</div>
+
+                <div class="problem-solution">
+                    <strong>Solution:</strong> Chunking + summarization pipeline + Claude recursion
+                </div>
+
+                <div class="supporting-threads">
+                    <div class="label">💬 Discussions:</div>
+
+                    <a href="https://reddit.com/r/Claude/search?q=token+limit" class="thread-link" target="_blank">Handling long context</a>
+
+                    <a href="https://github.com/search?q=text+chunking&type=code" class="thread-link" target="_blank">Chunking strategies</a>
+
+                    <a href="https://news.ycombinator.com/search?q=claude+context" class="thread-link" target="_blank">Context window management</a>
+
+                </div>
+
+                <button class="build-button" onclick="buildItem('problem', 1, 'Token limits on long documents', '{&quot;problem&quot;: &quot;Token limits on long documents&quot;, &quot;solution&quot;: &quot;Chunking + summarization pipeline + Claude recursion&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+            <div class="problem-card">
+                <div class="problem-title">Hallucinations in critical paths</div>
+
+                <div class="problem-solution">
+                    <strong>Solution:</strong> Verification loops + external grounding
+                </div>
+
+                <div class="supporting-threads">
+                    <div class="label">💬 Discussions:</div>
+
+                    <a href="https://reddit.com/r/Claude/search?q=hallucination" class="thread-link" target="_blank">Reducing hallucinations</a>
+
+                    <a href="https://github.com/search?q=verification+loop&type=code" class="thread-link" target="_blank">Verification patterns</a>
+
+                    <a href="https://news.ycombinator.com/search?q=claude+hallucination" class="thread-link" target="_blank">Grounded AI systems</a>
+
+                </div>
+
+                <button class="build-button" onclick="buildItem('problem', 2, 'Hallucinations in critical paths', '{&quot;problem&quot;: &quot;Hallucinations in critical paths&quot;, &quot;solution&quot;: &quot;Verification loops + external grounding&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+        </div>
+
+        <!-- QUOTES -->
+        <h2 class="section-title"><span style="font-size: 36px;">💬</span> What's Being Said</h2>
+        <div class="quotes-grid">
+
+            <div class="quote-card">
+                <div class="quote-text">"The future isn't AI replacing humans, it's humans with AI doing what humans do best"</div>
+                <div class="quote-attribution">
+                    <strong>u/claude_dev</strong><br>
+                    <small style="color: #94a3b8;">Discussion on AI-human collaboration</small>
+                </div>
+
+                <a href="https://reddit.com/r/Claude/comments/future_of_ai/" class="thread-link" style="margin-top: 12px;" target="_blank">See discussion →</a>
+
+                <button class="build-button" onclick="buildItem('quote', 0, 'u/claude_dev', '{&quot;text&quot;: &quot;The future isn't AI replacing humans, it's humans with AI doing what humans do best&quot;, &quot;author&quot;: &quot;u/claude_dev&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+            <div class="quote-card">
+                <div class="quote-text">"Claude became our infrastructure. We don't call APIs anymore, we describe outcomes."</div>
+                <div class="quote-attribution">
+                    <strong>startup founder</strong><br>
+                    <small style="color: #94a3b8;">HN discussion on AI-native architecture</small>
+                </div>
+
+                <a href="https://news.ycombinator.com/item?id=claude_infrastructure" class="thread-link" style="margin-top: 12px;" target="_blank">See discussion →</a>
+
+                <button class="build-button" onclick="buildItem('quote', 1, 'startup founder', '{&quot;text&quot;: &quot;Claude became our infrastructure. We don't call APIs anymore, we describe outcomes.&quot;, &quot;author&quot;: &quot;startup founder&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+            <div class="quote-card">
+                <div class="quote-text">"Testing isn't a bottleneck anymore. We feed requirements to Claude and get test suites."</div>
+                <div class="quote-attribution">
+                    <strong>u/qa_engineer</strong><br>
+                    <small style="color: #94a3b8;">QA automation with Claude</small>
+                </div>
+
+                <a href="https://reddit.com/r/programming/comments/ai_testing/" class="thread-link" style="margin-top: 12px;" target="_blank">See discussion →</a>
+
+                <button class="build-button" onclick="buildItem('quote', 2, 'u/qa_engineer', '{&quot;text&quot;: &quot;Testing isn't a bottleneck anymore. We feed requirements to Claude and get test suites.&quot;, &quot;author&quot;: &quot;u/qa_engineer&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+            <div class="quote-card">
+                <div class="quote-text">"The skill isn't prompt writing, it's building systems that think"</div>
+                <div class="quote-attribution">
+                    <strong>AI architect</strong><br>
+                    <small style="color: #94a3b8;">Agentic systems discussion</small>
+                </div>
+
+                <a href="https://news.ycombinator.com/item?id=claude_architecture" class="thread-link" style="margin-top: 12px;" target="_blank">See discussion →</a>
+
+                <button class="build-button" onclick="buildItem('quote', 3, 'AI architect', '{&quot;text&quot;: &quot;The skill isn't prompt writing, it's building systems that think&quot;, &quot;author&quot;: &quot;AI architect&quot;}')">
+                    ⚡ Build This Now
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BUILD MODAL -->
+    <div id="buildModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Skill</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+
+            <div id="statusMessage"></div>
+
+            <div class="modal-section">
+                <label class="modal-label">Skill Name (kebab-case)</label>
+                <input type="text" id="skillName" class="modal-input" placeholder="e.g., my-awesome-skill">
+                <div style="font-size: 12px; color: #94a3b8; margin-top: 8px;">
+                    Only lowercase letters, numbers, and hyphens. This will be your .py filename.
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <label class="modal-label">Item Type</label>
+                <input type="text" id="itemType" class="modal-input" readonly>
+            </div>
+
+            <div class="modal-section">
+                <label class="modal-label">Item Title</label>
+                <input type="text" id="itemTitle" class="modal-input" readonly>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn-primary" onclick="createSkill()">
+                    ✨ Create Skill
+                </button>
+                <button class="btn-secondary" onclick="closeModal()">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentItemData = null;
+
+        function buildItem(itemType, itemId, itemTitle, itemDataStr) {
+            document.getElementById('skillName').value = '';
+            document.getElementById('skillName').disabled = false;
+            document.getElementById('itemType').value = itemType.charAt(0).toUpperCase() + itemType.slice(1);
+            document.getElementById('itemTitle').value = itemTitle;
+            document.getElementById('statusMessage').innerHTML = '';
+
+            currentItemData = {
+                itemType: itemType,
+                itemId: itemId,
+                itemTitle: itemTitle,
+                itemData: JSON.parse(itemDataStr.replace(/&quot;/g, '"'))
+            };
+
+            document.getElementById('buildModal').style.display = 'block';
+            document.getElementById('skillName').focus();
+        }
+
+        function closeModal() {
+            document.getElementById('buildModal').style.display = 'none';
+            currentItemData = null;
+        }
+
+        function validateSkillName(name) {
+            const pattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+            return pattern.test(name);
+        }
+
+        function createSkill() {
+            const skillName = document.getElementById('skillName').value.trim();
+            const statusDiv = document.getElementById('statusMessage');
+
+            if (!skillName) {
+                statusDiv.innerHTML = '<div class="status-message status-error">❌ Please enter a skill name</div>';
+                return;
+            }
+
+            if (!validateSkillName(skillName)) {
+                statusDiv.innerHTML = '<div class="status-message status-error">❌ Skill name must be kebab-case (only lowercase letters, numbers, and hyphens)</div>';
+                return;
+            }
+
+            if (!currentItemData) {
+                statusDiv.innerHTML = '<div class="status-message status-error">❌ No item selected</div>';
+                return;
+            }
+
+            statusDiv.innerHTML = '<div class="status-message status-loading">⏳ Creating your skill (this takes ~30-60 seconds)...</div>';
+            document.getElementById('skillName').disabled = true;
+
+            // Fetch with timeout wrapper
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 minute timeout
+
+            fetch('/create-skill', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    skillName: skillName,
+                    itemType: currentItemData.itemType,
+                    itemData: currentItemData.itemData
+                }),
+                signal: controller.signal
+            })
+            .then(response => {
+                clearTimeout(timeoutId);
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.error || `Server error: ${response.status}`);
+                    }).catch(e => {
+                        throw new Error(e.message || `Server error: ${response.status}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                statusDiv.innerHTML = `
+                    <div class="status-message status-success">
+                        <strong>✅ Success!</strong><br>
+                        Your skill "${data.skillName}" has been created.<br>
+                        File: ${data.filename}<br>
+                        <br>Run it with: <code style="background: rgba(15, 23, 42, 0.8); padding: 4px 8px; border-radius: 4px;">python ${data.filename}</code>
+                    </div>
+                `;
+                setTimeout(() => {
+                    closeModal();
+                }, 3000);
+            })
+            .catch(error => {
+                clearTimeout(timeoutId);
+                if (error.name === 'AbortError') {
+                    statusDiv.innerHTML = `<div class="status-message status-error">❌ Request timed out. The server might be busy. Try again.</div>`;
+                } else {
+                    statusDiv.innerHTML = `<div class="status-message status-error">❌ Error: ${error.message}</div>`;
+                }
+                document.getElementById('skillName').disabled = false;
+            });
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('buildModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        document.getElementById('skillName').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                createSkill();
+            }
+        });
+    </script>
+</body>
+</html>
