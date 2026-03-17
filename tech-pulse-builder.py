@@ -1,85 +1,135 @@
 #!/usr/bin/env python3
-from flask import Flask, jsonify, send_file
+"""Tech Pulse Builder - Flask backend for skill generation"""
+from flask import Flask, jsonify, request, send_file
 from pathlib import Path
 import os
 import json
 import re
-from anthropic import Anthropic
+import sys
 
 app = Flask(__name__)
 golem_folder = Path(os.getcwd())
 api_key = os.environ.get("ANTHROPIC_API_KEY")
 
 if not api_key:
-    print("WARNING: ANTHROPIC_API_KEY not set")
+    print("WARNING: ANTHROPIC_API_KEY environment variable not set", file=sys.stderr)
 
-print(f"Init: folder={golem_folder}, html_exists={(golem_folder / 'tech-pulse.html').exists()}")
+print(f"Tech Pulse Builder started. Folder: {golem_folder}")
 
+@app.route('/', methods=['GET'])
 def root():
-    """Serve HTML dashboard"""
-    html_file = golem_folder / 'tech-pulse.html'
-    print(f"Request to / - serving {html_file}")
-    with open(html_file, 'r') as f:
-        return f.read(), 200, {'Content-Type': 'text/html'}
+    """Serve the dashboard HTML"""
+    html_file = golem_folder / 'index.html'
+    if not html_file.exists():
+        return jsonify({"error": "Dashboard not found"}), 404
+    with open(html_file, 'r', encoding='utf-8') as f:
+        return f.read(), 200, {'Content-Type': 'text/html; charset=utf-8'}
 
-def health_check():
-    """Health endpoint"""
-    return jsonify({"status": "ok", "folder": str(golem_folder)})
+@app.route('/health', methods=['GET'])
+def health():
+    """Health check endpoint"""
+    return jsonify({"status": "ok", "running": True}), 200
 
-def create_skill_post():
-    """Create a new skill"""
-    from flask import request
+@app.route('/create-skill', methods=['POST', 'OPTIONS'])
+def create_skill():
+    """Create a new skill by generating code with Claude"""
+    if request.method == 'OPTIONS':
+        return '', 204
+
     try:
-        data = request.json or {}
-        skill_name = data.get('skillName', 'test').strip()
+        data = request.get_json() or {}
+        skill_name = data.get('skillName', 'untitled-skill').strip()
+        item_type = data.get('itemType', 'idea')
+        item_data = data.get('itemData', {})
 
-        # Validate name
+        # Validate skill name format
         if not re.match(r'^[a-z0-9]+(?:-[a-z0-9]+)*$', skill_name):
-            return jsonify({"error": "Invalid skill name"}), 400
+            return jsonify({"error": "Skill name must be lowercase with hyphens only"}), 400
 
-        # Generate code
-        client = Anthropic(api_key=api_key)
-        prompt = f"Write a simple Python tool. Output ONLY the code, no markdown."
-        msg = client.messages.create(model="claude-opus-4-6", max_tokens=1000, messages=[{"role": "user", "content": prompt}])
-        code = msg.content[0].text.strip()
-        code = re.sub(r'^```.*\n?', '', code)
-        code = re.sub(r'\n?```$', '', code)
+        # Generate code using Claude API (direct HTTP call)
+        code = generate_code_with_claude(skill_name, item_type, item_data)
 
-        # Write file
+        # Write to file
         filename = skill_name.replace('-', '_') + '.py'
         filepath = golem_folder / filename
-        with open(filepath, 'w') as f:
+
+        with open(filepath, 'w', encoding='utf-8') as f:
             f.write(code)
 
-        return jsonify({"success": True, "filename": filename}), 201
+        return jsonify({
+            "success": True,
+            "skillName": skill_name,
+            "filename": filename,
+            "filepath": str(filepath),
+            "message": f"✅ Skill '{skill_name}' created successfully!",
+            "instructions": f"Run: python {filename}"
+        }), 201
+
     except Exception as e:
+        print(f"Error in create_skill: {e}", file=sys.stderr)
         return jsonify({"error": str(e)}), 500
 
-def handle_options():
-    """CORS preflight"""
-    return '', 204
+def generate_code_with_claude(skill_name, item_type, item_data):
+    """Generate Python code using Claude API"""
+    import urllib.request
+    import json
 
-def cors_headers(response):
-    """Add CORS headers"""
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-    return response
+    if not api_key:
+        raise ValueError("ANTHROPIC_API_KEY not configured")
 
-# Register routes
-app.add_url_rule('/', 'root', root, methods=['GET'])
-app.add_url_rule('/health', 'health', health_check, methods=['GET'])
-app.add_url_rule('/create-skill', 'create_skill', create_skill_post, methods=['POST'])
-app.add_url_rule('/create-skill', 'options', handle_options, methods=['OPTIONS'])
-app.after_request(cors_headers)
+    # Build the prompt based on item type
+    title = item_data.get('title', 'Tool')
+    description = item_data.get('description', 'A useful tool')
+
+    prompt = f"""Create a complete, runnable Python script for: {title}
+
+Description: {description}
+
+Requirements:
+- Complete, working code (not a template)
+- Use only Python stdlib (no external dependencies except as comments)
+- Include docstring and usage example
+- Works immediately with: python script.py
+- Main execution block: if __name__ == '__main__':
+
+Output ONLY the Python code, no markdown, no explanations."""
+
+    # Call Claude API directly via HTTP
+    url = "https://api.anthropic.com/v1/messages"
+    headers = {
+        "Content-Type": "application/json",
+        "x-api-key": api_key,
+        "anthropic-version": "2023-06-01"
+    }
+
+    payload = {
+        "model": "claude-opus-4",
+        "max_tokens": 2000,
+        "messages": [
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
+    }
+
+    req = urllib.request.Request(url, data=json.dumps(payload).encode('utf-8'), headers=headers, method='POST')
+
+    try:
+        with urllib.request.urlopen(req, timeout=120) as response:
+            result = json.loads(response.read().decode('utf-8'))
+            code = result['content'][0]['text'].strip()
+
+            # Remove markdown code blocks if present
+            code = re.sub(r'^```(?:python)?\n?', '', code)
+            code = re.sub(r'\n?```$', '', code)
+
+            return code
+    except urllib.error.HTTPError as e:
+        error_text = e.read().decode('utf-8')
+        raise Exception(f"Claude API error: {error_text}")
 
 if __name__ == '__main__':
-    print("\n" + "="*60)
-    print("TECH PULSE BUILDER")
-    print(f"Folder: {golem_folder}")
-    print("Routes:")
-    for rule in app.url_map.iter_rules():
-        print(f"  {rule.rule} -> {rule.endpoint}")
-    print("="*60 + "\n")
-    port = int(os.environ.get("PORT", 10000))
+    # Render compatibility: listen on 0.0.0.0:10000
+    port = int(os.environ.get('PORT', 10000))
     app.run(host='0.0.0.0', port=port, debug=False)
